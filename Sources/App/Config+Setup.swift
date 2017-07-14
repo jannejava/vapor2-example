@@ -1,4 +1,5 @@
 import LeafProvider
+import MySQLProvider
 
 extension Config {
     public func setup() throws {
@@ -12,5 +13,8 @@ extension Config {
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(LeafProvider.Provider.self)
+        // config.preparations.append(Station.self)
+        try addProvider(MySQLProvider.Provider.self)
+        preparations.append(Station.self)
     }
 }
