@@ -81,3 +81,5 @@ extension Station: Preparation {
         try database.delete(self)
     }
 }
+
+extension Station: Timestampable { }
