@@ -21,5 +21,12 @@ final class Routes: RouteCollection {
             return req.description
         }
         
+        builder.get("station") { req in
+            let station = Station(name: "Min station", description: "En beskrivning", country: "se", stream: "stream.url")
+            try station.save()
+ 
+            return "saved"
+        }
+        
     }
 }
