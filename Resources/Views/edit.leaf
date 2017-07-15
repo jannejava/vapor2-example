@@ -4,7 +4,7 @@
 
 #export("content") {
 
-	<form class="form" action="/station/#(station.id)" method="put">
+	<form class="form" action="/station/#(station.id)" method="post">
 		<div class="form-group">
 			<label for="name">Name</label>
 			<input class="form-control" type="text" name="name" value="#(station.name)">

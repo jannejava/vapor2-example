@@ -7,29 +7,42 @@ final class Routes: RouteCollection {
     }
     
     func build(_ builder: RouteBuilder) throws {
-        /// GET /
+
         builder.get { req in
-            
             let stations = try Station.makeQuery().all()
-            
             return try self.view.make("index", [
                 "stations": stations
             ])
         }
         
         builder.get("station", ":id") { req in
-            
             guard let stationId = req.parameters["id"]?.int else {
                 throw Abort.badRequest
             }
-            
+
             let station = try Station.makeQuery().find(stationId)
             
             return try self.view.make("edit", [
                 "station": station
             ])
-
+        }
         
+        builder.post("station", ":id") { req in
+            guard let stationId = req.parameters["id"]?.int else {
+                throw Abort.badRequest
+            }
+            
+            guard let station = try Station.makeQuery().find(stationId) else {
+                throw Abort.notFound
+            }
+            
+            let new = try req.parameters
+            
+            
+            // @todo redirect
+            return try self.view.make("edit", [
+                "station": station
+                ])
         }
         // @todo lägg till en station
         
