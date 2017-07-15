@@ -9,8 +9,17 @@ final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
         /// GET /
         builder.get { req in
-            return try self.view.make("welcome")
+            
+            let stations = try Station.makeQuery().all()
+            
+            return try self.view.make("index", [
+                "stations": stations
+            ])
         }
+        
+        // @todo lägg till en station
+        
+        // @todo lista en station...
         
         /// GET /hello/...
         //builder.resource("hello", HelloController(view))
@@ -24,7 +33,7 @@ final class Routes: RouteCollection {
         builder.get("station") { req in
             let station = Station(name: "Min station", description: "En beskrivning", country: "se", stream: "stream.url")
             try station.save()
- 
+            
             return "saved"
         }
         

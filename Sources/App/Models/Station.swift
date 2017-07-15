@@ -4,7 +4,10 @@ import MySQLProvider
 final class Station: Model {
     
     let storage = Storage()
-
+    
+    var id: Node?
+    var exists: Bool = false
+    
     var name: String
     var description: String
     var country: String
@@ -16,6 +19,7 @@ final class Station: Model {
     static let streamKey = "stream"
     
     init(name: String, description: String, country: String, stream: String) {
+        self.id = nil
         self.name = name
         self.description = description
         self.country = country
@@ -23,6 +27,7 @@ final class Station: Model {
     }
     
     init(row: Row) throws {
+        id = try row.get("id")
         name = try row.get(Station.nameKey)
         description = try row.get(Station.descriptionKey)
         country = try row.get(Station.countryKey)
@@ -45,6 +50,7 @@ extension Station: NodeRepresentable {
     func makeNode(in context: Context?) throws -> Node {
         var node = Node(context)
         
+        try node.set(Station.idKey, id?.int)
         try node.set(Station.nameKey, name)
         try node.set(Station.descriptionKey, description)
         try node.set(Station.countryKey, country)
