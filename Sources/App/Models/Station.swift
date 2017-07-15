@@ -34,6 +34,14 @@ final class Station: Model {
         stream = try row.get(Station.streamKey)
     }
     
+    init(node: Node) throws {
+        name = try node.get(Station.nameKey)
+        description = try node.get(Station.descriptionKey)
+        country = try node.get(Station.countryKey)
+        stream = try node.get(Station.streamKey)
+
+    }
+    
     func makeRow() throws -> Row {
         var row = Row()
         try row.set(Station.nameKey, name)

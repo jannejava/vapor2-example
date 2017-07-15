@@ -28,6 +28,11 @@ final class Routes: RouteCollection {
         }
         
         builder.post("station", ":id") { req in
+            
+            guard let form = req.formURLEncoded else {
+                throw Abort.badRequest
+            }
+            
             guard let stationId = req.parameters["id"]?.int else {
                 throw Abort.badRequest
             }
@@ -36,13 +41,14 @@ final class Routes: RouteCollection {
                 throw Abort.notFound
             }
             
-            let new = try req.parameters
+            let newStation = try Station(node: form)
             
+            station.country = newStation.country
+            station.name = newStation.name
+            station.description = newStation.description
+            try station.save()
             
-            // @todo redirect
-            return try self.view.make("edit", [
-                "station": station
-                ])
+            return Response(redirect: "/")
         }
         // @todo lägg till en station
         
