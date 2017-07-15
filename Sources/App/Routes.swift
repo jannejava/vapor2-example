@@ -17,6 +17,20 @@ final class Routes: RouteCollection {
             ])
         }
         
+        builder.get("station", ":id") { req in
+            
+            guard let stationId = req.parameters["id"]?.int else {
+                throw Abort.badRequest
+            }
+            
+            let station = try Station.makeQuery().find(stationId)
+            
+            return try self.view.make("edit", [
+                "station": station
+            ])
+
+        
+        }
         // @todo lägg till en station
         
         // @todo lista en station...

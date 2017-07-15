@@ -2,11 +2,13 @@
 <html>
 <head>
 	<title>#import("title")</title>
-	<link rel="stylesheet" href="/styles/app.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 <body>
 
-#import("content")
+	<div class="container">
+		#import("content")
+	</div>
 
 </body>
 </html>
