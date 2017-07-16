@@ -27,6 +27,21 @@ final class Routes: RouteCollection {
             ])
         }
         
+        builder.get("station", "create") { req in
+            return try self.view.make("edit")
+        }
+        
+        builder.post("station") { req in
+            guard let form = req.formURLEncoded else {
+                throw Abort.badRequest
+            }
+            
+            let station = try Station(node: form)
+            try station.save()
+            
+            return Response(redirect: "/")
+        }
+        
         builder.post("station", ":id") { req in
             
             guard let form = req.formURLEncoded else {

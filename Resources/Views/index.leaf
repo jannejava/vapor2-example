@@ -14,9 +14,9 @@
         #loop(stations, "station") {
             <tr>
             	<td><a href="/station/#(station.id)">#(station.id)</a></td>
-            	<td><a href="#">#(station.name)</a></td>
-            	<td>#(station.country)</a></td>
-                <td>#(station.stream)</a></td>
+            	<td>#(station.name)</td>
+            	<td>#(station.country)</td>
+                <td>#(station.stream)</td>
             </tr>
         }
     </table>
