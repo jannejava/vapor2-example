@@ -9,13 +9,19 @@ final class Routes: RouteCollection {
     func build(_ builder: RouteBuilder) throws {
 
         builder.get { req in
+            
+            // Get all stations
             let stations = try Station.makeQuery().all()
+            
+            
             return try self.view.make("index", [
                 "stations": stations
             ])
         }
-        
+    
         builder.get("station", ":id") { req in
+            
+            // Make sure the request contains an id
             guard let stationId = req.parameters["id"]?.int else {
                 throw Abort.badRequest
             }
@@ -27,7 +33,7 @@ final class Routes: RouteCollection {
             ])
         }
         
-        builder.get("station", "create") { req in
+        builder.get("add") { req in
             return try self.view.make("edit")
         }
         
@@ -44,10 +50,12 @@ final class Routes: RouteCollection {
         
         builder.post("station", ":id") { req in
             
+            // Make sure it's a form posted
             guard let form = req.formURLEncoded else {
                 throw Abort.badRequest
             }
             
+            // Make sure the request contains an id
             guard let stationId = req.parameters["id"]?.int else {
                 throw Abort.badRequest
             }
@@ -56,34 +64,22 @@ final class Routes: RouteCollection {
                 throw Abort.notFound
             }
             
+            // Use Vapor's node functions to create a new entity
             let newStation = try Station(node: form)
             
+            // Assign the new values back to the old
             station.country = newStation.country
             station.name = newStation.name
             station.description = newStation.description
+            
+            // ...and save
             try station.save()
             
             return Response(redirect: "/")
         }
-        // @todo lägg till en station
         
-        // @todo lista en station...
-        
-        /// GET /hello/...
-        //builder.resource("hello", HelloController(view))
-        
-        // response to requests to /info domain
-        // with a description of the request
-        builder.get("info") { req in
-            return req.description
+        builder.get("stations.json") { req in
+            return try Station.makeQuery().all().makeJSON()
         }
-        
-        builder.get("station") { req in
-            let station = Station(name: "Min station", description: "En beskrivning", country: "se", stream: "stream.url")
-            try station.save()
-            
-            return "saved"
-        }
-        
     }
 }

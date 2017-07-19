@@ -13,8 +13,9 @@ extension Config {
     /// Configure providers
     private func setupProviders() throws {
         try addProvider(LeafProvider.Provider.self)
-        // config.preparations.append(Station.self)
         try addProvider(MySQLProvider.Provider.self)
+        
+        // Run migrations/preparations
         preparations.append(Station.self)
     }
 }

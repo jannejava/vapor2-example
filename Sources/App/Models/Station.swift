@@ -3,16 +3,16 @@ import MySQLProvider
 
 final class Station: Model {
     
+    // The storage property is there to allow Fluent to store extra information on your model like the model's database id or if it's a existing or new entity.
     let storage = Storage()
     
     var id: Node?
-    var exists: Bool = false
-    
     var name: String
     var description: String
     var country: String
     var stream: String
     
+    // Just static variables holding the names to prevent typos
     static let nameKey = "name"
     static let descriptionKey = "description"
     static let countryKey = "country"
@@ -26,14 +26,16 @@ final class Station: Model {
         self.stream = stream
     }
     
+    // The Row struct represents a database row. Your models should be able to parse from and serialize to database rows. Here's the code for parsing the Stations from the database.
     init(row: Row) throws {
-        id = try row.get("id")
+        id = try row.get(Station.idKey)
         name = try row.get(Station.nameKey)
         description = try row.get(Station.descriptionKey)
         country = try row.get(Station.countryKey)
         stream = try row.get(Station.streamKey)
     }
     
+    // Init model from a Node-structure
     init(node: Node) throws {
         name = try node.get(Station.nameKey)
         description = try node.get(Station.descriptionKey)

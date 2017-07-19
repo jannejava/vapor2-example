@@ -1,6 +1,6 @@
 {
     "hostname": "127.0.0.1",
-    "user": "webdev",
-    "password": "webdev",
+    "user": "root",
+    "password": "",
     "database": "vapor"
 }

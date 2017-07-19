@@ -20,5 +20,7 @@
             </tr>
         }
     </table>
+
+    <a href="/add" class="btn btn-primary">Add a station</a>
 }
 
